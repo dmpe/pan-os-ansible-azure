@@ -1,0 +1,41 @@
+---
+- name: Print Firewall Rule Set
+  hosts: all
+  connection: local
+  gather_facts: False
+  roles:
+    - role: PaloAltoNetworks.paloaltonetworks
+  collections:
+    - paloaltonetworks.panos
+  tasks:
+
+  - name: Wait for FW reboot
+    panos_check:
+      provider: '{{ pan_provider }}'
+    register: result
+    until: not result|failed
+    retries: 50
+    delay: 5
+
+  - name: Gather facts for device
+    paloaltonetworks.panos.panos_facts:
+      provider: '{{ device }}'
+
+  - name: Get the system info
+    panos_op:
+      provider: '{{ pan_provider }}'
+      cmd: 'show system info'
+    register: res
+
+  - debug:
+      msg: '{{ res.stdout }}'
+
+  - name: Get the definition for rule 'HTTP Multimedia'
+    panos_security_rule_facts:
+      provider: '{{ pan_provider }}'
+      names:
+        - 'HTTP Multimedia'
+    register: rule1
+
+  - debug:
+      msg: '{{ rule1.spec }}'
