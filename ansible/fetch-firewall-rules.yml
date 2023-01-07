@@ -1,41 +1,39 @@
 ---
 - name: Print Firewall Rule Set
-  hosts: all
+  hosts: palo
   connection: local
   gather_facts: False
-  roles:
-    - role: PaloAltoNetworks.paloaltonetworks
   collections:
     - paloaltonetworks.panos
   tasks:
 
-  - name: Wait for FW reboot
-    panos_check:
-      provider: '{{ pan_provider }}'
-    register: result
-    until: not result|failed
-    retries: 50
-    delay: 5
+  # - name: Gather facts for device
+  #   panos_facts:
+  #     provider: '{{ pan_provider }}'
 
-  - name: Gather facts for device
-    paloaltonetworks.panos.panos_facts:
-      provider: '{{ device }}'
+  # - name: Get the system info
+  #   panos_op:
+  #     provider: '{{ pan_provider }}'
+  #     cmd: 'show system info'
+  #   register: res
 
-  - name: Get the system info
-    panos_op:
-      provider: '{{ pan_provider }}'
-      cmd: 'show system info'
-    register: res
+  # - debug:
+  #     msg: '{{ res.stdout }}'
 
+  - name: Get definition of Policy object (name wont be working!)
+    panos_security_rule:
+      provider: "{{ pan_provider }}"
+      gathered_filter: 'description contains rule'
+      state: gathered
+    register: rule2
   - debug:
-      msg: '{{ res.stdout }}'
+      msg: '{{ rule2 }}'
 
-  - name: Get the definition for rule 'HTTP Multimedia'
-    panos_security_rule_facts:
-      provider: '{{ pan_provider }}'
-      names:
-        - 'HTTP Multimedia'
+  - name: Fetch URL category (List of URLs)
+    panos_custom_url_category:
+      provider: "{{ pan_provider }}"
+      name: 'DockerHub'
+      state: gathered
     register: rule1
-
   - debug:
-      msg: '{{ rule1.spec }}'
+      msg: '{{ rule1 }}'

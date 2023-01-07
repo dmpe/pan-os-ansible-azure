@@ -1,5 +1,6 @@
 pan_provider:
-  ip_address: ''
+  ip_address: '20.22.55.232'
   username: ''
   password: ''
+  # https://ip/api/?type=keygen&user=username&password=password
   api_key: ''

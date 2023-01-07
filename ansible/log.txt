@@ -1,0 +1,107 @@
+
+PLAY [Print Firewall Rule Set] *************************************************
+
+TASK [Get definition of Policy object (name wont be working!)] *****************
+ok: [20.22.55.232]
+
+TASK [debug] *******************************************************************
+ok: [20.22.55.232] => {
+    "msg": {
+        "ansible_facts": {
+            "discovered_interpreter_python": "/usr/bin/python3"
+        },
+        "changed": false,
+        "failed": false,
+        "gathered": [
+            {
+                "action": "allow",
+                "antivirus": null,
+                "application": [
+                    "amazon-aws-console",
+                    "github"
+                ],
+                "category": [
+                    "DockerHub"
+                ],
+                "data_filtering": null,
+                "description": "Universal Developer rule",
+                "destination_devices": [
+                    "any"
+                ],
+                "destination_ip": [
+                    "20.22.55.232"
+                ],
+                "destination_zone": [
+                    "untrust"
+                ],
+                "disable_server_response_inspection": null,
+                "disabled": null,
+                "file_blocking": null,
+                "group_profile": null,
+                "group_tag": null,
+                "hip_profiles": null,
+                "icmp_unreachable": null,
+                "log_end": null,
+                "log_setting": null,
+                "log_start": null,
+                "negate_destination": null,
+                "negate_source": null,
+                "negate_target": null,
+                "rule_name": "DevOpsRuleSet",
+                "rule_type": null,
+                "schedule": null,
+                "service": [
+                    "service-http",
+                    "service-https"
+                ],
+                "source_devices": [
+                    "any"
+                ],
+                "source_ip": [
+                    "20.22.55.232"
+                ],
+                "source_user": [
+                    "any"
+                ],
+                "source_zone": [
+                    "untrust"
+                ],
+                "spyware": null,
+                "tag_name": null,
+                "target": null,
+                "url_filtering": null,
+                "uuid": "c88bb742-7f1f-4130-84da-77f472f143b8",
+                "vulnerability": null,
+                "wildfire_analysis": null
+            }
+        ],
+        "gathered_xml": [
+            "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<entry name=\"DevOpsRuleSet\" uuid=\"c88bb742-7f1f-4130-84da-77f472f143b8\">\n\t<from>\n\t\t<member>untrust</member>\n\t</from>\n\t<to>\n\t\t<member>untrust</member>\n\t</to>\n\t<source>\n\t\t<member>20.22.55.232</member>\n\t</source>\n\t<source-user>\n\t\t<member>any</member>\n\t</source-user>\n\t<destination>\n\t\t<member>20.22.55.232</member>\n\t</destination>\n\t<application>\n\t\t<member>amazon-aws-console</member>\n\t\t<member>github</member>\n\t</application>\n\t<service>\n\t\t<member>service-http</member>\n\t\t<member>service-https</member>\n\t</service>\n\t<category>\n\t\t<member>DockerHub</member>\n\t</category>\n\t<action>allow</action>\n\t<description>Universal Developer rule</description>\n\t<source-hip>\n\t\t<member>any</member>\n\t</source-hip>\n\t<destination-hip>\n\t\t<member>any</member>\n\t</destination-hip>\n</entry>\n"
+        ]
+    }
+}
+
+TASK [Fetch URL category (List of URLs)] ***************************************
+ok: [20.22.55.232]
+
+TASK [debug] *******************************************************************
+ok: [20.22.55.232] => {
+    "msg": {
+        "changed": false,
+        "failed": false,
+        "gathered": {
+            "description": null,
+            "name": "DockerHub",
+            "type": "URL List",
+            "url_value": [
+                "*.docker.com",
+                "docker.com"
+            ]
+        },
+        "gathered_xml": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<entry name=\"DockerHub\">\n\t<list>\n\t\t<member>*.docker.com</member>\n\t\t<member>docker.com</member>\n\t</list>\n\t<type>URL List</type>\n</entry>\n"
+    }
+}
+
+PLAY RECAP *********************************************************************
+20.22.55.232               : ok=4    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
